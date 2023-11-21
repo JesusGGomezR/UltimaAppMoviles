@@ -58,6 +58,7 @@ class LoginScreen extends StatelessWidget {
           );
         }
       } else {
+        print('Respuesta del servidor: ${response.body}');
         // Error en la solicitud HTTP
         showDialog(
           context: context,
