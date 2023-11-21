@@ -9,12 +9,12 @@ class ExpedientProvider extends ChangeNotifier {
   Expedient? get currentExpedient => _currentExpedient;
 
   static const String apiUrl =
-      'http://192.168.135.170/update_expedient.php'; // Asegúrate de actualizar la URL
+      'http://acessoitesi.com/scripts/update_expedient.php'; // Asegúrate de actualizar la URL
 
   Future<void> loadExpedientData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.135.170/load_expedient.php')); // Asegúrate de actualizar la URL
+          'http://acessoitesi.com/scripts/load_expedient.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> expedientData = json.decode(response.body);
@@ -39,7 +39,7 @@ class ExpedientProvider extends ChangeNotifier {
       Expedient updatedExpedient) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.135.170/update_expedient.php'),
+        Uri.parse('http://acessoitesi.com/scripts/update_expedient.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id_expediente': updatedExpedient.id_expediente,
@@ -71,7 +71,7 @@ class ExpedientProvider extends ChangeNotifier {
   Future<List<Expedient>> getExpedients() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.135.170/get_expedient.php')); // Asegúrate de actualizar la URL
+          'http://acessoitesi.com/scripts/get_expedient.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final List<dynamic> expedientDataList = json.decode(response.body);
@@ -103,7 +103,7 @@ class ExpedientProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> addExpedient(Expedient newExpedient) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.135.170/add_expedient.php'),
+        Uri.parse('http://acessoitesi.com/scripts/add_expedient.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id_expediente': newExpedient.id_expediente,
@@ -140,7 +140,7 @@ class ExpedientProvider extends ChangeNotifier {
   Future<List<Expedient>> getExpedientsForPatient(patientId) async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.135.170/get_expedient.php?patientId=$patientId'));
+          'http://acessoitesi.com/scripts/get_expedient.php?patientId=$patientId'));
 
       if (response.statusCode == 200) {
         final List<dynamic> expedientDataList = json.decode(response.body);

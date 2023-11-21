@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ActivityLogProvider extends ChangeNotifier {
-  static const String baseUrl = 'http://192.168.1.82/activity_log.php';
+  static const String baseUrl =
+      'http://acessoitesi.com/scripts/activity_log.php';
 
   Future<bool> logActivity(String message) async {
     try {
@@ -38,4 +39,3 @@ class ActivityLogProvider extends ChangeNotifier {
     }
   }
 }
-

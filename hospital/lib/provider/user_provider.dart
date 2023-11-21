@@ -8,12 +8,12 @@ class UserProvider extends ChangeNotifier {
 
   User? get currentUser => _currentUser;
 
-  static const String apiUrl = 'http://192.168.135.170/update_user.php';
+  static const String apiUrl = 'http://acessoitesi.com/scripts/update_user.php';
 
   Future<void> loadUserData() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://192.168.135.170/load_user.php'));
+      final response = await http
+          .get(Uri.parse('http://acessoitesi.com/scripts/load_user.php'));
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> userData = json.decode(response.body);
@@ -39,7 +39,7 @@ class UserProvider extends ChangeNotifier {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.135.170/update_user.php'), // Actualiza la URL al nuevo nombre del script
+            'http://acessoitesi.com/scripts/update_user.php'), // Actualiza la URL al nuevo nombre del script
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id': updatedUser.id,
@@ -73,8 +73,8 @@ class UserProvider extends ChangeNotifier {
 
   Future<List<User>> getUsers() async {
     try {
-      final response =
-          await http.get(Uri.parse('http://192.168.135.170/get_users.php'));
+      final response = await http
+          .get(Uri.parse('http://acessoitesi.com/scripts/get_users.php'));
 
       if (response.statusCode == 200) {
         final List<dynamic> userDataList = json.decode(response.body);
