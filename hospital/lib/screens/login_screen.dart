@@ -24,7 +24,7 @@ class LoginScreen extends StatelessWidget {
     // ignore: unnecessary_null_comparison
     if (curpController != null && hashedPassword != null) {
       final response = await http.post(
-        Uri.parse('http://192.168.1.82/login.php'),
+        Uri.parse('http://192.168.135.170/login.php'),
         body: {
           'curp': curpController.text,
           'password': hashedPassword,

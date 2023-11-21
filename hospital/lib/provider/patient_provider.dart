@@ -9,12 +9,12 @@ class PatientProvider extends ChangeNotifier {
   Patient? get currentPatient => _currentPatient;
 
   static const String apiUrl =
-      'http://192.168.1.82/update_patient.php'; // Asegúrate de actualizar la URL
+      'http://192.168.135.170/update_patient.php'; // Asegúrate de actualizar la URL
 
   Future<void> loadPatientData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.1.82/load_patient.php')); // Asegúrate de actualizar la URL
+          'http://192.168.135.170/load_patient.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> patientData = json.decode(response.body);
@@ -30,7 +30,7 @@ class PatientProvider extends ChangeNotifier {
           derechoHabiendo: patientData['derecho_habiendo'],
           afiliacion: patientData['afiliacion'],
           tipoSanguineo: patientData['tipo_sanguineo'],
-          diagnostico: patientData['diagnostico'],
+          //diagnostico: patientData['diagnostico'],
         );
 
         notifyListeners();
@@ -45,7 +45,7 @@ class PatientProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> updatePatientData(Patient updatedPatient) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.82/update_patient.php'),
+        Uri.parse('http://192.168.135.170/update_patient.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id_paciente': updatedPatient.idPaciente,
@@ -83,7 +83,7 @@ class PatientProvider extends ChangeNotifier {
   Future<List<Patient>> getPatients() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://192.168.1.82/get_patients.php')); // Asegúrate de actualizar la URL
+          'http://192.168.135.170/get_patients.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final List<dynamic> patientDataList = json.decode(response.body);
@@ -113,7 +113,7 @@ class PatientProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> addPatient(Patient newPatient) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.1.82/add_patient.php'),
+        Uri.parse('http://192.168.135.170/add_patient.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'curp': newPatient.curp,
@@ -126,7 +126,25 @@ class PatientProvider extends ChangeNotifier {
           'derecho_habiendo': newPatient.derechoHabiendo,
           'afiliacion': newPatient.afiliacion,
           'tipo_sanguineo': newPatient.tipoSanguineo,
+          //'diagnostico': newPatient.diagnostico,
+
+          // Agrega las nuevas propiedades para "consultasingreso" y "diagnosticosembarazadas"
+          'fecha_creacion_exp': newPatient.fechaCreacionExp,
+          'fecha_ingreso': newPatient.fechaIngreso,
+          'dxi': newPatient.dxi,
+          'medico_ingreso': newPatient.medicoIngreso,
+
+          'fecha_ultima_revision_exp': newPatient.fechaUltimaRevisionExp,
+          'fecha_primera_revision': newPatient.fechaPrimeraRevision,
+          'fecha_ultima_revision': newPatient.fechaUltimaRevision,
+          'fecha_puerperio': newPatient.fechaPuerperio,
+          //'diagnostico_embarazada': newPatient.diagnosticoEmbarazada,
+          'riesgo': newPatient.riesgo,
+          'traslado': newPatient.traslado,
+          'apeo': newPatient.apeo,
+
           'diagnostico': newPatient.diagnostico,
+          'fecha_registro': newPatient.fecha_registro,
         }),
       );
 

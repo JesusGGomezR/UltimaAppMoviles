@@ -14,7 +14,8 @@ class EditPatientDetailsScreen extends StatefulWidget {
       _EditPatientDetailsScreenState();
 }
 
-class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
+class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen>
+    with SingleTickerProviderStateMixin {
   late TextEditingController _curpController;
   late TextEditingController _nombreController;
   late TextEditingController _apellidosController;
@@ -26,29 +27,29 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
   late TextEditingController _afiliacionController;
   late TextEditingController _tipoSanguineoController;
   late TextEditingController _diagnosticoController;
+
+
+  late TabController _tabController;
+  //late TextEditingController _diagnosticoController;
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
+    _tabController = TabController(length: 3, vsync: this);
     // Inicializa los controladores con los datos actuales del paciente
     _curpController = TextEditingController(text: widget.patient.curp);
     _nombreController = TextEditingController(text: widget.patient.nombre);
-    _apellidosController =
-        TextEditingController(text: widget.patient.apellidos);
+    _apellidosController = TextEditingController(text: widget.patient.apellidos);
     _telefonoController = TextEditingController(text: widget.patient.telefono);
-    _domicilioController =
-        TextEditingController(text: widget.patient.domicilio);
+    _domicilioController = TextEditingController(text: widget.patient.domicilio);
     _generoController = TextEditingController(text: widget.patient.genero);
     _estatusController = TextEditingController(text: widget.patient.estatus);
-    _derechoHabiendoController =
-        TextEditingController(text: widget.patient.derechoHabiendo);
-    _afiliacionController =
-        TextEditingController(text: widget.patient.afiliacion);
-    _tipoSanguineoController =
-        TextEditingController(text: widget.patient.tipoSanguineo);
-    _diagnosticoController =
-        TextEditingController(text: widget.patient.diagnostico);
+    _derechoHabiendoController = TextEditingController(text: widget.patient.derechoHabiendo);
+    _afiliacionController = TextEditingController(text: widget.patient.afiliacion);
+    _tipoSanguineoController = TextEditingController(text: widget.patient.tipoSanguineo);
+    _diagnosticoController = TextEditingController(text: widget.patient.diagnostico);
+    //_diagnosticoController = TextEditingController(text: widget.patient.diagnostico);
   }
 
   @override
@@ -57,18 +58,41 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 27, 89, 121),
         title: Text('Editar Detalles del Paciente'),
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: [
+            Tab(text: 'Paciente'),
+            Tab(text: 'Egreso'),
+            Tab(text: 'Embarazada'),
+          ],
+        ),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: formEditPatient(context),
+      body: DefaultTabController(
+        length: 3,
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            // Contenido de la pestaña 1
+            SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: formEditPatient(context),
+              ),
+            ),
+            // Contenido de la pestaña 2
+            // Agrega tus campos adicionales aquí
+            Container(child: Text('Pestaña 2')),
+            // Contenido de la pestaña 3
+            // Agrega tus campos adicionales aquí
+            Container(child: Text('Pestaña 3')),
+          ],
         ),
       ),
       persistentFooterButtons: [
         ElevatedButton(
           style: ButtonStyle(
               backgroundColor:
-                  MaterialStatePropertyAll(Color.fromARGB(255, 27, 89, 121))),
+              MaterialStatePropertyAll(Color.fromARGB(255, 27, 89, 121))),
           onPressed: () {
             if (_formKey.currentState != null &&
                 _formKey.currentState!.validate()) {
@@ -92,7 +116,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'CURP',
             _curpController,
             'Ingrese el CURP',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el CURP';
               } else if (value.length < 18) {
@@ -105,7 +129,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Nombre',
             _nombreController,
             'Ingrese el nombre',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el nombre';
               }
@@ -116,7 +140,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Apellidos',
             _apellidosController,
             'Ingrese los apellidos',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa los apellidos';
               }
@@ -127,7 +151,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Teléfono',
             _telefonoController,
             'Ingrese el teléfono',
-            (value) {
+                (value) {
               if (value == null || value.isEmpty || !isNumeric(value)) {
                 return 'Por favor, ingresa el teléfono';
               } else if (value.length < 10) {
@@ -142,7 +166,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Domicilio',
             _domicilioController,
             'Ingrese el domicilio',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el domicilio';
               }
@@ -153,7 +177,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Género',
             _generoController,
             'Ingrese el género',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el genero Masculino / Femenino';
               }
@@ -164,7 +188,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Estatus',
             _estatusController,
             'Ingrese el estatus',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el estado Activo/Inactivo';
               }
@@ -175,7 +199,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Derecho Habiendo',
             _derechoHabiendoController,
             'Ingrese el derecho habiendo',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el derecho habiendo';
               }
@@ -186,7 +210,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Afiliación',
             _afiliacionController,
             'Ingrese la afiliación',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa la afiliacion en caso de no tener escribe Ninguno';
               }
@@ -197,24 +221,26 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             'Tipo Sanguíneo',
             _tipoSanguineoController,
             'Ingrese el tipo sanguíneo',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el tipo sanguíneo';
               }
               return null;
             },
           ),
+
           _buildTextField(
             'Diagnóstico',
             _diagnosticoController,
             'Ingrese el diagnóstico',
-            (value) {
+                (value) {
               if (value!.isEmpty) {
                 return 'Por favor, ingresa el diagnostico';
               }
               return null;
             },
           ),
+
           SizedBox(height: 32.0),
         ],
       ),
@@ -222,12 +248,12 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
   }
 
   Widget _buildTextField(
-    String label,
-    TextEditingController controller,
-    String hintText,
-    String? Function(String?)? validator, {
-    bool obscureText = false,
-  }) {
+      String label,
+      TextEditingController controller,
+      String hintText,
+      String? Function(String?)? validator, {
+        bool obscureText = false,
+      }) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10.0),
       padding: EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
@@ -251,7 +277,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
             controller: controller,
             decoration: InputDecoration(
               hintText: hintText,
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: TextStyle(color: Colors.grey),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey),
               ),
@@ -268,7 +294,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
 
   void _updatePatientDetails(BuildContext context) async {
     final patientProvider =
-        Provider.of<PatientProvider>(context, listen: false);
+    Provider.of<PatientProvider>(context, listen: false);
 
     // Crea un nuevo paciente con los detalles actualizados
     Patient updatedPatient = Patient(
@@ -288,7 +314,7 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
 
     try {
       final Map<String, dynamic> response =
-          await patientProvider.updatePatientData(updatedPatient);
+      await patientProvider.updatePatientData(updatedPatient);
       print('Response from server: $response');
 
       // Recargar la lista después de la actualización
@@ -324,4 +350,12 @@ class _EditPatientDetailsScreenState extends State<EditPatientDetailsScreen> {
     }
     return double.tryParse(str) != null;
   }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
 }
+
