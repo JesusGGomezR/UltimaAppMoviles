@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
 $username = 'root';
-$password = '';
-$database = 'hospital-tarimoro';
+$password = 'SoI*Z7yT[iHr';
+$database = 'id21382147_hospital';
 
 $conexion = new mysqli($host, $username, $password, $database);
 

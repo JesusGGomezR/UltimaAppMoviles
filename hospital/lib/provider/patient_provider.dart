@@ -9,12 +9,12 @@ class PatientProvider extends ChangeNotifier {
   Patient? get currentPatient => _currentPatient;
 
   static const String apiUrl =
-      'http://acessoitesi.com/scripts/update_patient.php'; // Asegúrate de actualizar la URL
+      'http://accesoitesiv1.000webhostapp.com/update_patient.php'; // Asegúrate de actualizar la URL
 
   Future<void> loadPatientData() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://acessoitesi.com/scripts/load_patient.php')); // Asegúrate de actualizar la URL
+          'http://accesoitesiv1.000webhostapp.com/load_patient.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> patientData = json.decode(response.body);
@@ -45,7 +45,7 @@ class PatientProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> updatePatientData(Patient updatedPatient) async {
     try {
       final response = await http.post(
-        Uri.parse('http://acessoitesi.com/scripts/update_patient.php'),
+        Uri.parse('http://accesoitesiv1.000webhostapp.com/update_patient.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'id_paciente': updatedPatient.idPaciente,
@@ -83,7 +83,7 @@ class PatientProvider extends ChangeNotifier {
   Future<List<Patient>> getPatients() async {
     try {
       final response = await http.get(Uri.parse(
-          'http://acessoitesi.com/scripts/get_patients.php')); // Asegúrate de actualizar la URL
+          'http://accesoitesiv1.000webhostapp.com/get_patients.php')); // Asegúrate de actualizar la URL
 
       if (response.statusCode == 200) {
         final List<dynamic> patientDataList = json.decode(response.body);
@@ -113,7 +113,7 @@ class PatientProvider extends ChangeNotifier {
   Future<Map<String, dynamic>> addPatient(Patient newPatient) async {
     try {
       final response = await http.post(
-        Uri.parse('http://acessoitesi.com/scripts/add_patient.php'),
+        Uri.parse('http://accesoitesiv1.000webhostapp.com/add_patient.php'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
           'curp': newPatient.curp,

@@ -6,7 +6,7 @@ $curp = isset($_POST['curp']) ? $_POST['curp'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 
 // Conexión a la base de datos (ajusta según tu configuración)
-$mysqli = new mysqli('localhost', 'root', '', 'hospital-tarimoro');
+$mysqli = new mysqli('localhost', 'root', 'SoI*Z7yT[iHr', 'id21382147_hospital');
 
 // Manejar errores de conexión
 if ($mysqli->connect_error) {

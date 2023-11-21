@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 class ActivityLogProvider extends ChangeNotifier {
   static const String baseUrl =
-      'http://acessoitesi.com/scripts/activity_log.php';
+      'http://accesoitesiv1.000webhostapp.com/activity_log.php';
 
   Future<bool> logActivity(String message) async {
     try {
