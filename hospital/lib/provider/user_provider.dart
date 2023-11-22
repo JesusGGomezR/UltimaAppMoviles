@@ -112,23 +112,38 @@ class UserProvider extends ChangeNotifier {
         }),
       );
 
-      // Decodifica la respuesta del servidor
-      final Map<String, dynamic> responseData = json.decode(response.body);
+      // Verifica el código de estado de la respuesta
+      if (response.statusCode == 200) {
+        // Intenta decodificar la respuesta del servidor
+        try {
+          final Map<String, dynamic> responseData = json.decode(response.body);
 
-      // Verifica si la respuesta es un mapa (JSON válido)
-      if (responseData is Map<String, dynamic>) {
-        print('Response from server: $responseData');
+          // Verifica si la respuesta es un mapa (JSON válido)
+          if (responseData is Map<String, dynamic>) {
+            print('Response from server: $responseData');
 
-        // Devuelve la respuesta del servidor
-        return responseData;
+            // Devuelve la respuesta del servidor
+            return responseData;
+          } else {
+            // Si la respuesta no es un mapa, lanza una excepción
+            throw Exception('Respuesta del servidor no es un JSON válido');
+          }
+        } catch (e) {
+          // Si hay un error al decodificar el JSON, lanza una excepción
+          throw Exception(
+              'Error al decodificar la respuesta JSON del servidor');
+        }
       } else {
-        // Si la respuesta no es un mapa, lanza una excepción
-        throw Exception('Respuesta del servidor no es un JSON válido');
+        // Si el código de estado no es 200, lanza una excepción con el código de estado
+        throw Exception('Error en la solicitud HTTP: ${response.statusCode}');
       }
     } catch (error) {
       print('Error: $error');
       // En caso de error, puedes lanzar una excepción o devolver un mapa indicando el error
-      throw Exception('Error deleting user');
+      return {
+        'success': false,
+        'message': 'Error en la solicitud HTTP: $error'
+      };
     }
   }
 }

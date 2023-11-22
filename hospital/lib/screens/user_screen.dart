@@ -118,7 +118,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                 // Lógica para eliminar el usuario
                 try {
                   // Llama a la función deleteUser del UserProvider
-                  await userProvider.deleteUser(user.id);
+                  await userProvider.deleteUser(int.parse(user.id));
                   // Recarga la lista después de eliminar el usuario
                   await userProvider.loadUserData();
                 } catch (e) {
@@ -129,7 +129,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
               style: ElevatedButton.styleFrom(
                 primary: Colors.red, // Color de fondo del botón de eliminar
               ),
-              child: Text(
+              child: const Text(
                 'Eliminar',
                 style: TextStyle(
                   fontSize: 14,
