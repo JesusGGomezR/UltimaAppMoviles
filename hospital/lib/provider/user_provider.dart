@@ -101,4 +101,34 @@ class UserProvider extends ChangeNotifier {
       return [];
     }
   }
+
+  Future<Map<String, dynamic>> deleteUser(int userId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://accesoitesiv1.000webhostapp.com/delete_user.php'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({
+          'id': userId,
+        }),
+      );
+
+      // Decodifica la respuesta del servidor
+      final Map<String, dynamic> responseData = json.decode(response.body);
+
+      // Verifica si la respuesta es un mapa (JSON válido)
+      if (responseData is Map<String, dynamic>) {
+        print('Response from server: $responseData');
+
+        // Devuelve la respuesta del servidor
+        return responseData;
+      } else {
+        // Si la respuesta no es un mapa, lanza una excepción
+        throw Exception('Respuesta del servidor no es un JSON válido');
+      }
+    } catch (error) {
+      print('Error: $error');
+      // En caso de error, puedes lanzar una excepción o devolver un mapa indicando el error
+      throw Exception('Error deleting user');
+    }
+  }
 }

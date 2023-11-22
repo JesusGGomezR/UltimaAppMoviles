@@ -67,6 +67,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
   }
 
   ListTile listaUsers(User user, BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
     return ListTile(
       title: Text(
         user.nombre ?? '',
@@ -82,29 +83,61 @@ class _EditUserScreenState extends State<EditUserScreen> {
           fontSize: 14,
         ),
       ),
-      trailing: SizedBox(
-        width: 80,
-        child: ElevatedButton(
-          onPressed: () {
-            // Navegar a la pantalla de edición con el usuario seleccionado
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditUserDetailsScreen(user: user),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 80,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navegar a la pantalla de edición con el usuario seleccionado
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditUserDetailsScreen(user: user),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(
+                    255, 27, 89, 121), // Color de fondo del botón
               ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-            primary:
-                Color.fromARGB(255, 27, 89, 121), // Color de fondo del botón
-          ),
-          child: Text(
-            'Editar',
-            style: TextStyle(
-              fontSize: 14,
+              child: Text(
+                'Editar',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
             ),
           ),
-        ),
+          SizedBox(width: 8), // Añadir un espacio entre los botones
+          SizedBox(
+            width: 80,
+            child: ElevatedButton(
+              onPressed: () async {
+                // Lógica para eliminar el usuario
+                try {
+                  // Llama a la función deleteUser del UserProvider
+                  await userProvider.deleteUser(user.id);
+                  // Recarga la lista después de eliminar el usuario
+                  await userProvider.loadUserData();
+                } catch (e) {
+                  print('Error al eliminar el usuario: $e');
+                  // Puedes manejar el error según tus necesidades
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red, // Color de fondo del botón de eliminar
+              ),
+              child: Text(
+                'Eliminar',
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
